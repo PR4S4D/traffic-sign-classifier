@@ -39,4 +39,4 @@ def readTrafficSigns(rootpath):
     return images, labels
 
 
-trainImages, trainLabels = readTrafficSigns('GTSRB/Training')
+trainImages, trainLabels = readTrafficSigns('GTSRB/Training/Images/')
