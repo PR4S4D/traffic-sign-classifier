@@ -75,7 +75,9 @@ Here are a few images after grey scaling and normalizing  -
 
 <img src="./examples/preprocesed_images.png" />
 
-The difference between the original data set and the augmented data set is the following ... 
+The original images were RGB with size (32, 32, 3).
+The pre-processed images were Grey with size (32, 32, 1).
+
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -105,19 +107,53 @@ My final model consisted of the following layers:
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
+
+To train the model I chose Lenet-5 architecture as the starting point as it's a very well known architecture for classification of images. I had to just tune a few hyperparameters to increase the accuracy of the model.
 To train the model, I used a AdamOptimizer - Optimizer that implements the Adam algorithm.
+
+Pros of AdamOptimizer -
++ Adaptive learning rate and momentum for each parameter
++ Learning rate does not diminish like other optimzers
+
+Cons of AdamOptimizer -
+* Does not “look ahead” like other optimizers
+
 The following hyperparameters were used - 
-* ECOCHS = 100
+* ECOCHS = 128
 * learning_rate = 0.001
 * Batch_size = 100
 * Dropout keep_prob for training = 0.5
 
+With EPOCHS 128, I was getting better testing accuracy when compared to EPOCHS 64. I was getting more accurate results with the 128 than 64.
+128 EPOCHS seems like a lot, but I felt it was okay as the model wasn't taking too much time to get trained.
+
+I tried increasing the learning_rate and found that the accuracy was reduced.
+Decreasing the learning_rate didn't yield much difference.
+
+
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
+Starting with Lenet-5 architecture was a good starting point to train the model as it is a very well-known model for classification. With this architecture we can easily adjust the hyperparameters and verify our model.
+
+
+But the accuracy was just around 90%. I had to do pre-process images.
+In the pre-processing step I converted the RGB images to Grey.
+Also I normalized the image data between 0.1 and 0.9. After this the accuracy increased by 1 or 2 percent.
+Adding a couple of dropout layer to the Lenet network actually helped the model to increase it's accuracy.
+And finally EPOCHS was set to 128 to get a validation accuracy of 97.1%.
+
+The performance of the model was measured using a Test set.
+Also, a few images from web were used to verify if the model was correctly classifying the images.
+
+
 My final model results were:
-* training set accuracy of 0.998
-* validation set accuracy of 0.965 
-* test set accuracy of 0.939
+* training set accuracy of 0.999
+* validation set accuracy of 0.971 
+* test set accuracy of 0.947
+
+Graph of accuracy vs epochs - 
+
+<img src="./examples/accuracy.png">
 
 
 ### Test a Model on New Images
@@ -134,7 +170,13 @@ Here are five German traffic signs that I found on the web:
 <img src="./new_test_data/test5.jpg" alt="drawing" width="200"/>
 
 
-The first image might be difficult to classify because ...
+The first image might be difficult to classify because of the background objects and the angle of the sign.
+
+The second image & fourth images are already pixellated/noisy and when it's converted to 32 x 32 it might lose lot of infomation. The contrast b/w the sign and the background is kinda low.
+
+The third image should be okay.
+
+The last image can be difficult because of the angle and the small objects near the top and bottom edges.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
