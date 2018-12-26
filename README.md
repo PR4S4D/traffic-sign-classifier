@@ -124,7 +124,7 @@ The following hyperparameters were used -
 * Batch_size = 100
 * Dropout keep_prob for training = 0.5
 
-With EPOCHS 128, I was getting better testing accuracy when compared to EPOCHS 64. I was getting more accurate results with the 128 than 64.
+With EPOCHS 128, I was getting better testing accuracy when compared to EPOCHS 64. I was getting more accurate results with web images as well.
 128 EPOCHS seems like a lot, but I felt it was okay as the model wasn't taking too much time to get trained.
 
 I tried increasing the learning_rate and found that the accuracy was reduced.
